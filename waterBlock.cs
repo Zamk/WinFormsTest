@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace WaterCourier {
 	class WaterBlock {
 		Point cord;
-
+		
 		public WaterBlock(Point Cord) {
 			cord = Cord;
 		}

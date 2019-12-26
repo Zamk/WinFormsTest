@@ -29,6 +29,68 @@ namespace WaterCourier {
 			Text = "Test game";
 			StartPosition = FormStartPosition.CenterScreen;
 
+			DrawTopMenu();
+			DrawMainMenu();
+		}
+
+		private void TimerTick(object sender, EventArgs e) {
+
+			if(wc != null && tickCount > (FPS * delay)) {
+				frameCount = tickCount% ((int)(FPS * delay));
+				if(frameCount == (tickCount / ((int)(FPS * delay)))) wc.AddWaterBlock(new Point(conteinerPositionX, conteinerPositionY - ((frameCount - 1) * 22)));
+			}
+			if(c != null) c.Move();
+
+			this.Refresh();
+			tickCount++;
+		}
+
+		private void StartGame() {
+			wc = new WaterConteiner();
+			c = new Courier();
+			timer = new Timer();
+			timer.Interval = 1000/FPS;
+			timer.Tick += TimerTick;
+
+			wc.CreateWaterConteiner(sizeOfConteiner);
+			Paint += wc.RedrawConteiner;
+
+			c.CreateCourier(new Point(courierStartPositionX, conteinerPositionY));
+			Paint += c.Redraw;
+
+			c.CourierTookWaterEvent += new CourierHandler(wc.CourierTookWaterHandler);
+			c.CourierFinishedEvent += new CourierHandler(wc.CourierFinishedHandler);
+			c.CourierFinishedEvent += new CourierHandler(TicksReset);
+
+
+			wc.WaterConteinerFullEvent += new WaterConteinerHandler(c.WaterConteinerFullHandler);
+
+			c.ConteinerPositionX = conteinerPositionX;
+			c.Speed = courierSpeed;
+
+			timer.Start();
+		}
+
+		private void StopGame() {
+			if(timer != null) timer.Stop();
+			
+			if(wc != null) {
+				wc.Clear();
+				wc = null;
+			}
+			if(c != null) { 
+				c.Stop();
+				c = null;
+			}
+			TicksReset();
+			this.Refresh();
+		}
+
+		private void TicksReset() {
+			tickCount = -1;
+		}
+
+		private void DrawTopMenu() {
 			MenuItem menu1 = new MenuItem("Game");
 			topMenu.MenuItems.Add(menu1);
 			
@@ -51,39 +113,6 @@ namespace WaterCourier {
 			menu1ExitToMenu.Click += new EventHandler(M1ETMClick);
 			
 			Menu = topMenu;
-
-			DrawMainMenu();
-		}
-
-		private void TimerTick(object sender, EventArgs e) {
-
-			if(wc != null && tickCount > (FPS * delay)) {
-				frameCount = tickCount% ((int)(FPS * delay));
-				if(frameCount == (tickCount / ((int)(FPS * delay)))) wc.AddWaterBlock(new Point(conteinerPositionX, conteinerPositionY - ((frameCount - 1) * 22)));
-			}
-			if(c != null) c.Move();
-
-			this.Refresh();
-			tickCount++;
-		}
-
-		private void StopGame() {
-			if(timer != null) timer.Stop();
-			
-			if(wc != null) {
-				wc.Clear();
-				wc = null;
-			}
-			if(c != null) { 
-				c.Stop();
-				c = null;
-			}
-			TicksReset();
-			this.Refresh();
-		}
-
-		private void TicksReset() {
-			tickCount = -1;
 		}
 
 		private void DrawMainMenu() {
@@ -108,29 +137,7 @@ namespace WaterCourier {
 		}
 
 		private void DrawGame() {
-			wc = new WaterConteiner();
-			c = new Courier();
-			timer = new Timer();
-			timer.Interval = 1000/FPS;
-			timer.Tick += TimerTick;
-
-			wc.CreateWaterConteiner(sizeOfConteiner);
-			Paint += wc.RedrawConteiner;
-
-			c.CreateCourier(new Point(courierStartPositionX, conteinerPositionY));
-			Paint += c.Redraw;
-
-			c.CourierTookWaterEvent += new CourierHandler(wc.CourierTookWaterHandler);
-			c.CourierFinishedEvent += new CourierHandler(wc.CourierFinishedHandler);
-			c.CourierFinishedEvent += new CourierHandler(TicksReset);
-
-
-			wc.WaterConteinerFullEvent += new WaterConteinerHandler(c.WaterConteinerFullHandler);
-
-			c.ConteinerPositionX = conteinerPositionX;
-			c.Speed = courierSpeed;
-
-			timer.Start();
+			StartGame();
 		}
 
 		private void DrawAboutDev() {
