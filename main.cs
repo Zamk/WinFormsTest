@@ -373,12 +373,4 @@ namespace WaterCourier {
 			isStarted = true;
 		}
 	}
-
-	class Programm {
-		[STAThread]
-		public static void Main() {
-			MyForm form = new MyForm();
-			Application.Run(form);
-		}
-	}
 }
