@@ -60,6 +60,7 @@ namespace WaterCourier{
 			isExist = true;
 		}
 
+		
 		public void Redraw(object sender, PaintEventArgs e) {
 			if(isExist)e.Graphics.FillEllipse(new SolidBrush(Color.Red), cord.X, cord.Y, 20, 20);
 		}

@@ -90,6 +90,7 @@ namespace WaterCourier {
 			tickCount = -1;
 		}
 
+		//Верхнее меню
 		private void DrawTopMenu() {
 			MenuItem menu1 = new MenuItem("Game");
 			topMenu.MenuItems.Add(menu1);
@@ -115,6 +116,7 @@ namespace WaterCourier {
 			Menu = topMenu;
 		}
 
+		//Отрисовка экрана главного меню
 		private void DrawMainMenu() {
 			Button startGame = new Button();
 			startGame.Text = "Start";
@@ -140,6 +142,7 @@ namespace WaterCourier {
 			StartGame();
 		}
 
+		//Отрисовка экрана информации о разработчике
 		private void DrawAboutDev() {
 			Label info = new Label();
 			info.AutoSize = true;
@@ -154,6 +157,7 @@ namespace WaterCourier {
 			Controls.Add(back);
 		}
 
+		//Отрисовка экрана с настройками
 		TextBox t1, t2, t3;
 		private void DrawSettings() {
 			Label l1 = new Label();
@@ -193,6 +197,7 @@ namespace WaterCourier {
 			Controls.Add(save);
 		}
 
+		//Сохранение введенных настроек
 		private void SetSettings(object sender, EventArgs e) {
 			if(t1.Text.Length != 0) sizeOfConteiner = Convert.ToInt32(t1.Text);
 			if(t2.Text.Length != 0) courierSpeed = Convert.ToInt32(t2.Text);
@@ -202,6 +207,8 @@ namespace WaterCourier {
 			DrawMainMenu();
 		}
 		
+		//Обработчики для меню
+
 		private void OnBackClick(object sender, EventArgs e) {
 			Controls.Clear();
 			DrawMainMenu();
