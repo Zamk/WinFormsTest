@@ -16,7 +16,7 @@ namespace WaterCourier {
 			}
 		}
 
-		public void CreateWaterConteiner(int count) {
+		public WaterConteiner(int count) {
 			blocks = new WaterBlock[count];
 			fullness = 0;
 			isStarted = true;
@@ -34,9 +34,9 @@ namespace WaterCourier {
 			}
 		}
 
-		public void RedrawConteiner(object sender, PaintEventArgs e) {
+		public void RedrawConteiner(Graphics g) {
 			for(int i = 0; i < blocks.Length; i++) {
-				if(blocks[i] != null) blocks[i].Redraw(e.Graphics);
+				if(blocks[i] != null) blocks[i].Redraw(g);
 			}
 		}
 

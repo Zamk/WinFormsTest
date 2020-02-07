@@ -13,6 +13,13 @@ namespace WaterCourier{
 		bool isExist;
 		bool isStarted;
 
+		public Courier(Point Cord) {
+			cord = Cord;
+			courierStartPositionX = cord.X;
+			isStarted = false;
+			isExist = true;
+		}
+
 		public int ConteinerPositionX {
 			set {
 				conteinerPositionX = value;
@@ -45,13 +52,6 @@ namespace WaterCourier{
 			speed = -speed;
 		}
 
-		public void CreateCourier(Point Cord) {
-			cord = Cord;
-			courierStartPositionX = cord.X;
-			isStarted = false;
-			isExist = true;
-		}
-
 		public void Stop() {
 			isExist = false;
 		}
@@ -59,10 +59,9 @@ namespace WaterCourier{
 		public void Start() {
 			isExist = true;
 		}
-
 		
-		public void Redraw(object sender, PaintEventArgs e) {
-			if(isExist)e.Graphics.FillEllipse(new SolidBrush(Color.Red), cord.X, cord.Y, 20, 20);
+		public void Redraw(Graphics g) {
+			if(isExist)g.FillEllipse(new SolidBrush(Color.Red), cord.X, cord.Y, 20, 20);
 		}
 
 		public void WaterConteinerFullHandler() {

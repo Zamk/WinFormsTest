@@ -3,8 +3,8 @@ using System.Windows.Forms;
 using System.Drawing;
 
 namespace WaterCourier {
-	delegate void WaterConteinerHandler();
-	delegate void CourierHandler();
+	//delegate void WaterConteinerHandler();
+	//delegate void CourierHandler();
 
 	class MyForm : Form {
 		int conteinerPositionY = 400;
